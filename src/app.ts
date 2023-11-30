@@ -5,7 +5,7 @@ import './app.less'
 import {userBasic} from "./store/network";
 import {getTokenSync} from "./store/token";
 import useStore from "./store/store";
-
+import './assets/font/iconfont.css';
 function App(props) {
   const {setUserInfo,userInfo}=useStore()
   const token = getTokenSync()

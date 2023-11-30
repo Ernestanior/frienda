@@ -1,8 +1,6 @@
 import {View} from '@tarojs/components'
 import './index.less'
 import Taro from "@tarojs/taro";
-import demo from "../../../../assets/demo1.jpg";
-import {Image} from "@nutui/nutui-react-taro";
 const Index=()=> {
     const goto=(page:string)=>{
         Taro.navigateTo({url:page})
@@ -10,7 +8,7 @@ const Index=()=> {
     return (
         <View className='game-list'>
             <View className='top-note-box' onClick={()=>goto('a')}>
-                <Image src={demo} width={70} height={90} />
+                {/*<Image src={demo} width={70} height={90} />*/}
                 <div className={'top-note-text'}>雪乡连环事件真的太惨了</div>
             </View>
         </View>

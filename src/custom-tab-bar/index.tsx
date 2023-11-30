@@ -17,7 +17,7 @@ export default class Index extends Component {
                 text: '首页'
             },
             {
-                pagePath: '/pages/menu/index',
+                pagePath: '/pages/room/index',
                 selectedIconPath: '../assets/tabbar/menu-fill.png',
                 iconPath: '../assets/tabbar/menu.png',
                 text: '分类'

@@ -1,31 +1,22 @@
-import { Component } from 'react'
-import Taro from '@tarojs/taro'
-import type CustomTabBar from '../../custom-tab-bar'
-
 import './index.less'
-import Navigation from "./components/navigation";
-import Swiper from "./components/swiper";
 import {View} from "@tarojs/components";
-import Callboard from "./components/callboard";
-import Top from "./components/top";
-import New from "./components/new";
-export default class Index extends Component {
-  pageCtx = Taro.getCurrentInstance().page
+import TopSection from './components/top'
+import CircleSection from './components/circle'
+import ActivitySection from './components/activity'
+import RoomList from './components/RoomList'
+import HomeTab from './components/tab'
 
-  componentDidShow () {
-    const tabbar = Taro.getTabBar<CustomTabBar>(this.pageCtx)
-    tabbar?.setSelected(0)
-  }
 
-  render () {
+const Index =()=> {
     return (
-        <View style={{paddingLeft:8,paddingRight:8}}>
-            <Swiper/>
-            <Navigation/>
-            <Callboard/>
-            <New/>
-            <Top/>
+        <View className={'index-container'}>
+            <TopSection/>
+            <CircleSection/>
+            <ActivitySection/>
+            <RoomList/>
+            <HomeTab/>
+            <View style={{height:60}}></View>
         </View>
     )
-  }
 }
+export default Index

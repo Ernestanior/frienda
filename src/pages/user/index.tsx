@@ -4,7 +4,6 @@ import {View} from '@tarojs/components'
 import type CustomTabBar from '../../custom-tab-bar'
 import {userBasic, wxLogin} from "../../store/network";
 // import {saveToken} from "../../store/token";
-// import image1 from '@/assets/profile/ppp.jpg'
 import folder from '@/assets/profile/folder.png'
 import empty from '@/assets/profile/image.png'
 import message from '@/assets/profile/message.png'

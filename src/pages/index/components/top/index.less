@@ -1,40 +1,63 @@
-.top-note-title{
-  margin-bottom: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.top-note-label {
-  font-size: 16px;
-  font-weight: 600;
-}
-.top-note-more {
-  font-size: 11px;
-  color:#aaa;
-  display: flex;
-  align-items: center;
-
-}
-.top-note-container{
-  display: flex;
-  height: 130px;
-}
-.top-note-box{
-  width: 70px;
-  margin-right: 8px;
-}
-.top-note-image{
-  width:70px;
-  height: 100px;
-  border-radius: 7px;
-}
-.top-note-text{
-  font-size: 11px;
-  color:#666;
-  text-align: center;
-
-  overflow:hidden; //超出的文本隐藏
-  text-overflow:ellipsis; //溢出用省略号显示
-  white-space:nowrap; //溢出不换行
-
+.top-section{
+  width: 100%;
+  padding:0 20px;
+  background-image: linear-gradient(#fff1d4, #f5f5f5);
+  .nav-bar{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    height:40px;
+    width:53%;
+    margin-bottom:15px;
+  }
+  .navigation-image-one{
+    width: 130px;
+    height: 40px;
+  }
+  .navigation-image-two{
+    width: 73px;
+    height: 33px;
+  }
+  .logo-image{
+    width: 160px;
+    height:42px
+  }
+  .city-btn{
+    margin-left: 10px;
+    font-size:14px;
+    padding: 8px 10px;
+    background-color: #000;
+    color:#fff;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .logo-text{
+    letter-spacing: 5px;
+    font-size: 16px;
+    margin-left: 15px;
+    color:#666;
+  }
+  .search-bar{
+    position: absolute;
+    bottom: 0;
+    left:0;
+    margin-top: 20px;
+    font-size: 16px;
+    color:#888;
+    display: flex;
+    align-items: center;
+    border: 2px solid #fff;
+    backdrop-filter: blur(10px);
+    padding:10px 20px;
+    border-radius: 20px;
+    width: 70vw;
+    box-shadow: 0 5px 15px 0 #ddd;
+  }
+  .friend-img{
+    height: 130px;
+    width: 120px;
+    transform: translate(-35px,-25px);
+  }
 }
