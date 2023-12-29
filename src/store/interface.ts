@@ -13,6 +13,7 @@ export interface StoreState {
   modalContent:any;
   token:string;
   userInfo:any;
+  tab:string;
 
 }
 
@@ -21,8 +22,7 @@ export interface StoreActions {
   setModalContent:any;
   setToken:any;
   setUserInfo:any;
-
-
+  setTab:any;
 }
 
 export interface IAccountInfo {

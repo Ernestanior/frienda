@@ -1,18 +1,28 @@
 import './index.less'
 import {View} from "@tarojs/components";
 import {IconFont} from "@nutui/icons-react-taro";
-import match from "../../../../assets/index/match2.png";
-import mine from "../../../../assets/index/mine.png";
-import mineFill from "../../../../assets/index/mine-fill.png";
-import {useState} from "react";
-
-
+import match from "@/assets/index/match2.png";
+import mine from "@/assets/index/mine.png";
+import mineFill from "@/assets/index/mine-fill.png";
+import {useCallback} from "react";
+import Taro from "@tarojs/taro";
+import useStore from "../../store/store";
 
 const Index=()=> {
-    const [tab,setTab]=useState<string>('home')
+    const {tab,setTab}=useStore()
+    const onRedirectTo=useCallback((url:string)=>{
+        setTab(url)
+        if (url==='home'){
+            Taro.redirectTo({url:'/pages/index/index'})
+        }
+        else if (url==='mine'){
+            Taro.redirectTo({url:'/pages/user/index'})
+        }
+
+    },[])
     return (
         <View className={'home-tab'}>
-            <View className={'tab-item'} onTap={()=>setTab('home')}>
+            <View className={'tab-item'} onTap={()=>onRedirectTo('home')}>
                 <IconFont size={20} fontClassName="iconfont" classPrefix='icon' name='planet' className={'home-img'} style={tab==="home"&&{color:"#f2ac3c"}}/>
                 <View className={'tab-text'} style={tab==="home"?{color:"#000"}:{}}>首页</View>
             </View>
@@ -22,7 +32,7 @@ const Index=()=> {
                 </View>
                 <View className={'tab-text'} style={tab==="match"?{color:"#000"}:{}}>配对</View>
             </View>
-            <View className={'tab-item'} onTap={()=>setTab('mine')}>
+            <View className={'tab-item'} onTap={()=>onRedirectTo('mine')} >
                 {tab==='mine'?<img alt="" src={mineFill} className={'mine-fill-img'}/>:
                     <img alt="" src={mine} className={'mine-img'} />
                 }

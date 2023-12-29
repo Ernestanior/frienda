@@ -1,30 +1,42 @@
-import {useMemo, useState} from 'react'
-import Taro, { useDidShow } from '@tarojs/taro'
-import {View} from '@tarojs/components'
-import type CustomTabBar from '../../custom-tab-bar'
+import {useEffect, useState} from 'react'
+import Taro from '@tarojs/taro'
+import {ScrollView, View} from '@tarojs/components'
+// import type CustomTabBar from '../../custom-tab-bar'
 import {userBasic, wxLogin} from "../../store/network";
 // import {saveToken} from "../../store/token";
-import folder from '@/assets/profile/folder.png'
 import empty from '@/assets/profile/image.png'
-import message from '@/assets/profile/message.png'
-import order from '@/assets/profile/order.png'
-import right from '@/assets/profile/right.png'
-import crown from '@/assets/profile/crown.png'
-import discover from '@/assets/profile/discover.png'
+
 import './index.less'
 import {Button} from "@nutui/nutui-react-taro";
 import {saveToken} from "../../store/token";
 import useStore from "../../store/store";
+import HomeTab from '../../common/tab'
+import {IconFont} from "@nutui/icons-react-taro";
+import order from "@/assets/profile/nav/order.png";
+import merchant from "@/assets/profile/nav/merchant.png";
+import star from "@/assets/profile/nav/star.png";
+import comment from "@/assets/profile/nav/comment.png";
+import nav6 from "@/assets/nav/nav6.png";
+import demo4 from "../../assets/index/demo4.png";
+import profile from "../../assets/index/profile.png";
+const statusBarHeight:any=Taro.getSystemInfoSync().statusBarHeight
 
 const User= ()=> {
     const {setUserInfo,userInfo}=useStore()
-    const page = useMemo(() => Taro.getCurrentInstance().page, [])
     const [codeOpenId,setCodeOpenId]=useState<string>('')
     const [userData,setUserData]=useState<any>({})
-    useDidShow(() => {
-        const tabbar = Taro.getTabBar<CustomTabBar>(page)
-        tabbar?.setSelected(3)
-    })
+
+
+    const onReturn=()=>{
+        Taro.navigateBack()
+    }
+    const goto=(page:string)=>{
+        Taro.navigateTo({url:page})
+    }
+
+    useEffect(()=>{
+        Taro.hideHomeButton()
+    },[])
 
     const bindPhoneNumber= async (e:any)=>{
         const res = await wxLogin({codeOpenId,codePhone:e.detail.code,...userData})
@@ -54,52 +66,145 @@ const User= ()=> {
 
     return (
         <View className="profile-page-container" >
+            <View className={'header'} style={{marginTop:statusBarHeight}}>
+                <IconFont name={'back'} fontClassName="iconfont" classPrefix='icon' size={16} onClick={onReturn}/>
+                订单详情
+                <View style={{width:15}}/>
+            </View>
             {userInfo?<div className="profile-login-button" >
                 <img alt="" src={empty} className="profile-login-button-img"/>
                 <span style={{marginLeft:10}}>{userInfo.name}</span>
             </div>:<div className="profile-login-button" onClick={login} >
                 <img alt="" src={empty} className="profile-login-button-img"/>
-                <Button style={{border:0,padding:8,fontFamily:"Gill Sans"}} openType={'getPhoneNumber'} onGetPhoneNumber={bindPhoneNumber}>点击登录</Button>
+                <Button style={{border:0,padding:8,fontFamily:"Gill Sans",backgroundColor:"transparent"}} openType={'getPhoneNumber'} onGetPhoneNumber={bindPhoneNumber}>点击登录</Button>
             </div>}
-            <View className="profile-box" >
-                <div className="profile-item-container" >
-                    <div className="profile-item-text">
-                        <img alt="" src={message} className="profile-item-icon"/>
-                        消息
-                    </div>
-                    <img alt="" src={right} className="profile-item-right-icon"/>
-                </div>
-                <div className="profile-item-container" >
-                    <div className="profile-item-text">
-                        <img alt="" src={order} className="profile-item-icon"/>
-                        订单
-                    </div>
-                    <img alt="" src={right} className="profile-item-right-icon"/>
-                </div>
-                <div className="profile-item-container" >
-                    <div className="profile-item-text">
-                        <img alt="" src={folder} className="profile-item-icon"/>
-                        我的收藏
-                    </div>
-                    <img alt="" src={right} className="profile-item-right-icon"/>
-                </div>
-                <div className="profile-item-container" >
-                    <div className="profile-item-text">
-                        <img alt="" src={crown} className="profile-item-icon"/>
-                        成就
-                    </div>
-                    <img alt="" src={right} className="profile-item-right-icon"/>
-                </div>
+            <View className={'detail'}>
+                <View className={'item'}>
+                    <span className={'count'}>1.6k</span>
+                    <span className={'label'}>关注</span>
+                </View>
+                <View className={'item'}>
+                    <span className={'count'}>128</span>
+                    <span className={'label'}>粉丝</span>
+                </View>
+                <View className={'item'}>
+                    <span className={'count'}>42</span>
+                    <span className={'label'}>历史活动</span>
+                </View>
             </View>
-            <View className="profile-box" >
-                <div className="profile-item-container" >
-                    <div className="profile-item-text">
-                        <img alt="" src={discover} className="profile-item-icon"/>
-                        关于我们
-                    </div>
-                    <img alt="" src={right} className="profile-item-right-icon"/>
-                </div>
+            <View className='nav-box'>
+                <View className='wallet'>
+                    <span style={{fontSize:14,fontWeight:500}}>我的钱包</span>
+                    <span style={{display:"flex",alignItems:"center",fontSize:10}}>
+                        立即进入
+                        <IconFont name={'right1'} fontClassName="iconfont" classPrefix='icon' size={10} onClick={onReturn}/>
+                    </span>
+                </View>
+                <View className='nav'>
+                    <View className={'item'}>
+                        <img alt="" src={order} className='icon-order'/>
+                        <span className={'label'}>订单</span>
+                    </View>
+                    <View className={'item'}>
+                        <img alt="" src={comment} className='icon'/>
+                        <span className={'label'}>评价</span>
+                    </View>
+                    <View className={'item'}>
+                        <img alt="" src={star} className='icon'/>
+                        <span className={'label'}>达人入驻</span>
+                    </View><View className={'item'}>
+                    <img alt="" src={merchant} className='icon'/>
+                    <span className={'label'}>商家入驻</span>
+                </View>
+                </View>
             </View>
+            <View className='activity-box'>
+                <img alt="" src={nav6} className="activity-title"/>
+                <ScrollView scrollX scrollWithAnimation>
+                    <View style={{display:"flex"}}>
+                        <View className='activity-item' onClick={()=>goto('/pages/activity/index')}>
+                            <View className='activity-row'>
+                                <View className='activity-image'>
+                                    <img alt="" src={demo4} className={'image'}/>
+                                    <View className={'image-tag'}>报名中</View>
+                                </View>
+                                <View className='activity-content'>
+                                    <View className='content-title'>
+                                        摄影 | 黑龙潭风铃节 打卡小冰岛
+                                    </View>
+                                    <View className='content-date'>
+                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="clock" style={{marginRight:5}}/>
+                                        20:30-22:30 周一 06.12
+                                    </View>
+                                    <View className='content-address'>
+                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="address" style={{marginRight:5}}/>
+                                        11km 景天320足球公园
+                                    </View>
+                                    <View className='content-organizer'>
+                                        <img alt="" src={profile} className='profile-img'/>
+                                        Floyd Miles
+                                    </View>
+                                </View>
+                            </View>
+
+                        </View>
+                        <View className='activity-item' onClick={()=>goto('/pages/activity/index')}>
+                            <View className='activity-row'>
+                                <View className='activity-image'>
+                                    <img alt="" src={demo4} className={'image'}/>
+                                    <View className={'image-tag'}>报名中</View>
+                                </View>
+                                <View className='activity-content'>
+                                    <View className='content-title'>
+                                        摄影 | 黑龙潭风铃节 打卡小冰岛
+                                    </View>
+                                    <View className='content-date'>
+                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="clock" style={{marginRight:5}}/>
+                                        20:30-22:30 周一 06.12
+                                    </View>
+                                    <View className='content-address'>
+                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="address" style={{marginRight:5}}/>
+                                        11km 景天320足球公园
+                                    </View>
+                                    <View className='content-organizer'>
+                                        <img alt="" src={profile} className='profile-img'/>
+                                        Floyd Miles
+                                    </View>
+                                </View>
+                            </View>
+
+                        </View>
+                        <View className='activity-item' onClick={()=>goto('/pages/activity/index')}>
+                            <View className='activity-row'>
+                                <View className='activity-image'>
+                                    <img alt="" src={demo4} className={'image'}/>
+                                    <View className={'image-tag'}>报名中</View>
+                                </View>
+                                <View className='activity-content'>
+                                    <View className='content-title'>
+                                        摄影 | 黑龙潭风铃节 打卡小冰岛
+                                    </View>
+                                    <View className='content-date'>
+                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="clock" style={{marginRight:5}}/>
+                                        20:30-22:30 周一 06.12
+                                    </View>
+                                    <View className='content-address'>
+                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="address" style={{marginRight:5}}/>
+                                        11km 景天320足球公园
+                                    </View>
+                                    <View className='content-organizer'>
+                                        <img alt="" src={profile} className='profile-img'/>
+                                        Floyd Miles
+                                    </View>
+                                </View>
+                            </View>
+
+                        </View>
+                    </View>
+                </ScrollView>
+            </View>
+
+            <HomeTab/>
         </View>
     )
 }

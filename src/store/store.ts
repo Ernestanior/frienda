@@ -8,6 +8,7 @@ const initState: StoreState = {
     modalContent:'',
     token:'',
     userInfo:'',
+    tab:'home',
 
 };
 
@@ -19,6 +20,7 @@ const useStore = create<StoreState & StoreActions>()(
           setModalContent:(modalContent:any)=>set(()=>({modalContent})),
           setToken:(token:any)=>set(()=>({token})),
           setUserInfo:(userInfo:any)=>set(()=>({userInfo})),
+          setTab:(tab:any)=>set(()=>({tab})),
       })),
       {
         name: 'global-store',

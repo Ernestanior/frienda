@@ -4,12 +4,16 @@ import demo1 from "../../../../assets/index/demo1.jpg";
 import {IconFont} from "@nutui/icons-react-taro";
 import profile from "../../../../assets/index/profile.png";
 import demo2 from "../../../../assets/index/demo2.png";
+import Taro from "@tarojs/taro";
 const Index=()=> {
     // const goto=(page:string)=>{
     //     Taro.navigateTo({url:page})
     // }
+    const toActivity=()=>{
+        Taro.navigateTo({url:'/pages/activity/index'})
+    }
     return (
-        <View className={'activity-section'}>
+        <View className={'activity-section'} onClick={toActivity}>
             <View className={'main-section'}>
                 <img alt="" src={demo1} className={'demo1-img'}/>
                 <View className={'main-content'}>

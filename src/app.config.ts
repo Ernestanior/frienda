@@ -1,13 +1,14 @@
 export default defineAppConfig({
   pages: [
     'pages/index/index',
+    'pages/user/index',
+    'pages/orderDetail/index',
+    'pages/pay/index',
+    'pages/merchant/index',
+    'pages/activity/index',
+    'pages/comment/index',
     'pages/note/index',
     'pages/room/index',
-    'pages/user/index',
-    'pages/game/index',
-    'pages/noteList/index',
-    'pages/gender/index',
-
   ],
   // tabBar:{
   //   custom:true,

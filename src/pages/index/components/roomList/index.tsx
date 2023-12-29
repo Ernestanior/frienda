@@ -4,13 +4,14 @@ import profile from '../../../../assets/index/profile.png'
 
 import './index.less'
 import {IconFont} from "@nutui/icons-react-taro";
+import Taro from "@tarojs/taro";
 const Index=()=> {
-    // const goto=(page:string)=>{
-    //     Taro.navigateTo({url:page})
-    // }
+    const goto=(page:string)=>{
+        Taro.navigateTo({url:page})
+    }
     return (
             <View className='room-container'>
-                <View className='room-box' >
+                <View className='room-box' onClick={()=>goto('/pages/activity/index')}>
                     <View className='room-row'>
                         <View className='room-image'>
                             <img alt="" src={demo4} className={'image'}/>
@@ -44,13 +45,13 @@ const Index=()=> {
                             </View>
                             20人已加入
                         </View>
-                        <View className='join-btn'>
+                        <View className='join-btn' onClick={()=>goto('/pages/pay/index')}>
                             立即上车
                         </View>
                     </View>
 
                 </View>
-                <View className='room-box' >
+                <View className='room-box' onClick={()=>goto('/pages/activity/index')}>
                     <View className='room-row'>
                         <View className='room-image'>
                             <img alt="" src={demo4} className={'image'}/>
@@ -84,13 +85,13 @@ const Index=()=> {
                             </View>
                             20人已加入
                         </View>
-                        <View className='join-btn'>
+                        <View className='join-btn' onClick={()=>goto('/pages/pay/index')}>
                             立即上车
                         </View>
                     </View>
 
                 </View>
-                <View className='room-box' >
+                <View className='room-box' onClick={()=>goto('/pages/activity/index')} >
                     <View className='room-row'>
                         <View className='room-image'>
                             <img alt="" src={demo4} className={'image'}/>
@@ -124,13 +125,13 @@ const Index=()=> {
                             </View>
                             20人已加入
                         </View>
-                        <View className='join-btn'>
+                        <View className='join-btn' onClick={()=>goto('/pages/pay/index')}>
                             立即上车
                         </View>
                     </View>
 
                 </View>
-                <View className='room-box' >
+                <View className='room-box' onClick={()=>goto('/pages/activity/index')}>
                     <View className='room-row'>
                         <View className='room-image'>
                             <img alt="" src={demo4} className={'image'}/>
@@ -164,7 +165,7 @@ const Index=()=> {
                             </View>
                             20人已加入
                         </View>
-                        <View className='join-btn'>
+                        <View className='join-btn' onClick={()=>goto('/pages/pay/index')}>
                             立即上车
                         </View>
                     </View>
