@@ -1,68 +1,50 @@
-import { Component } from 'react'
-import Taro from '@tarojs/taro'
-import { CoverView, CoverImage } from '@tarojs/components'
-
 import './index.less'
+import {View} from "@tarojs/components";
+import match from "@/assets/index/match2.png";
+import mine from "@/assets/index/mine.png";
+import mineFill from "@/assets/index/mine-fill.png";
+import planet from "@/assets/index/planet.png";
+import planetFill from "@/assets/index/planet-fill.png";
 
-export default class Index extends Component {
-    state = {
-        selected: 0,
-        color: '#aaa',
-        selectedColor: '#0675c4',
-        list: [
-            {
-                pagePath: '/pages/index/index',
-                selectedIconPath: '../assets/tabbar/home-fill.png',
-                iconPath: '../assets/tabbar/home.png',
-                text: '首页'
-            },
-            {
-                pagePath: '/pages/room/index',
-                selectedIconPath: '../assets/tabbar/menu-fill.png',
-                iconPath: '../assets/tabbar/menu.png',
-                text: '分类'
-            },
-            {
-                pagePath: '/pages/game/index',
-                selectedIconPath: '../assets/tabbar/shop-fill.png',
-                iconPath: '../assets/tabbar/shop.png',
-                text: '购物车'
-            },
-            {
-                pagePath: '/pages/user/index',
-                selectedIconPath: '../assets/tabbar/user-fill.png',
-                iconPath: '../assets/tabbar/user.png',
-                text: '个人中心'
-            }
-        ]
-    }
+import {useCallback} from "react";
+import Taro from "@tarojs/taro";
+import useStore from "../store/store";
 
-    switchTab(index, url) {
-        this.setSelected(index)
-        Taro.switchTab({ url })
-    }
+const Index=({style}:any)=> {
+    const {tab,setTab}=useStore()
+    const onSwitchTab=useCallback((url:string)=>{
+        setTab(url)
+        if (url==='home'){
+            // Taro.redirectTo({url:'/pages/index/index'})
+            Taro.switchTab({url:'/pages/index/index'})
 
-    setSelected (idx: number) {
-        this.setState({
-            selected: idx
-        })
-    }
+        }
+        else if (url==='mine'){
+            // Taro.redirectTo({url:'/pages/user/index'})
+            Taro.switchTab({url:'/pages/user/index'})
+        }
 
-    render() {
-        const { list, selected, color, selectedColor } = this.state
-
-        return (
-            <CoverView className='tab-bar'>
-                <CoverView className='tab-bar-border'></CoverView>
-                {list.map((item, index) => {
-                    return (
-                        <CoverView key={index} className='tab-bar-item' onClick={this.switchTab.bind(this, index, item.pagePath)}>
-                            <CoverImage src={selected === index ? item.selectedIconPath : item.iconPath} />
-                            <CoverView style={{ color: selected === index ? selectedColor : color }}>{item.text}</CoverView>
-                        </CoverView>
-                    )
-                })}
-            </CoverView>
-        )
-    }
+    },[])
+    return (
+        <View className={'home-tab'} style={style}>
+            <View className={'tab-item'} onTap={()=>onSwitchTab('home')}>
+                {tab==='home'?<img alt="" src={planetFill} className={'planet-img'}/>:
+                    <img alt="" src={planet} className={'planet-img'} />
+                }<View className={'tab-text'} style={tab==="home"?{color:"#000"}:{}}>首页</View>
+            </View>
+            <View className={'tab-center-item'}>
+                <View className='match-icon'>
+                    <img alt="" src={match} className={'match-img'}/>
+                </View>
+                <View className={'tab-text'} style={tab==="match"?{color:"#000"}:{}}>配对</View>
+            </View>
+            <View className={'tab-item'} onTap={()=>onSwitchTab('mine')} >
+                {tab==='mine'?<img alt="" src={mineFill} className={'mine-fill-img'}/>:
+                    <img alt="" src={mine} className={'mine-img'} />
+                }
+                <View className={'tab-text'} style={tab==="mine"?{color:"#000"}:{}}>我的</View>
+            </View>
+        </View>
+    )
 }
+export default Index;

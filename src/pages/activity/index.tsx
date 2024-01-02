@@ -9,7 +9,7 @@ export default function Index () {
 
     return (
         <>
-            <View className='activity-container' style={{background:"#eee url('../../assets/index/demo1.jpg') no-repeat",backgroundSize:"contain",}}>
+            <View className='activity-container' style={{background:"#eee url('https://pic.ziyuan.wang/user/guest/2024/01/u1_c4e1bf35f9d6b.jpg') no-repeat",backgroundSize:"contain",}}>
                 <Header/>
                 <Nav/>
                 <Main/>

@@ -8,21 +8,24 @@ import {useCallback} from "react";
 import Taro from "@tarojs/taro";
 import useStore from "../../store/store";
 
-const Index=()=> {
+const Index=({style}:any)=> {
     const {tab,setTab}=useStore()
-    const onRedirectTo=useCallback((url:string)=>{
+    const onSwitchTab=useCallback((url:string)=>{
         setTab(url)
         if (url==='home'){
-            Taro.redirectTo({url:'/pages/index/index'})
+            // Taro.redirectTo({url:'/pages/index/index'})
+            Taro.switchTab({url:'/pages/index/index'})
+
         }
         else if (url==='mine'){
-            Taro.redirectTo({url:'/pages/user/index'})
+            // Taro.redirectTo({url:'/pages/user/index'})
+            Taro.switchTab({url:'/pages/user/index'})
         }
 
     },[])
     return (
-        <View className={'home-tab'}>
-            <View className={'tab-item'} onTap={()=>onRedirectTo('home')}>
+        <View className={'home-tab'} style={style}>
+            <View className={'tab-item'} onTap={()=>onSwitchTab('home')}>
                 <IconFont size={20} fontClassName="iconfont" classPrefix='icon' name='planet' className={'home-img'} style={tab==="home"&&{color:"#f2ac3c"}}/>
                 <View className={'tab-text'} style={tab==="home"?{color:"#000"}:{}}>首页</View>
             </View>
@@ -32,7 +35,7 @@ const Index=()=> {
                 </View>
                 <View className={'tab-text'} style={tab==="match"?{color:"#000"}:{}}>配对</View>
             </View>
-            <View className={'tab-item'} onTap={()=>onRedirectTo('mine')} >
+            <View className={'tab-item'} onTap={()=>onSwitchTab('mine')} >
                 {tab==='mine'?<img alt="" src={mineFill} className={'mine-fill-img'}/>:
                     <img alt="" src={mine} className={'mine-img'} />
                 }

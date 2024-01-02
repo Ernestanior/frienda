@@ -10,7 +10,6 @@ import './index.less'
 import {Button} from "@nutui/nutui-react-taro";
 import {saveToken} from "../../store/token";
 import useStore from "../../store/store";
-import HomeTab from '../../common/tab'
 import {IconFont} from "@nutui/icons-react-taro";
 import order from "@/assets/profile/nav/order.png";
 import merchant from "@/assets/profile/nav/merchant.png";
@@ -204,7 +203,7 @@ const User= ()=> {
                 </ScrollView>
             </View>
 
-            <HomeTab/>
+            {/*<HomeTab style={{margin:'0 10px'}}/>*/}
         </View>
     )
 }

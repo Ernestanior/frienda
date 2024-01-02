@@ -4,7 +4,7 @@ import TopSection from './components/top'
 import CircleSection from './components/circle'
 import ActivitySection from './components/activity'
 import RoomList from './components/RoomList'
-import HomeTab from '../../common/tab'
+// import HomeTab from '../../common/tab'
 import {useState} from "react";
 import MerchantList from "./components/merchantList";
 
@@ -20,7 +20,7 @@ const Index =()=> {
                 <ActivitySection/>
                 <RoomList/>
             </>}
-            <HomeTab/>
+            {/*<HomeTab/>*/}
             <View style={{height:60}}></View>
         </View>
     )
