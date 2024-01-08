@@ -11,15 +11,21 @@ export default defineAppConfig({
     'pages/note/index',
     'pages/room/index',
   ],
-  tabBar:{
-    custom:true,
-    color:"#8a8a8a",
-    selectedColor:"#ff0000",
-    backgroundColor:"#fafafa",
-    borderStyle:"black",
-    list:[
+  tabBar: {
+    custom: true,
+    color: "#8a8a8a",
+    selectedColor: "#ff0000",
+    backgroundColor: "#fafafa",
+    borderStyle: "black",
+    list: [
       {
         pagePath: 'pages/index/index',
+        selectedIconPath: 'assets/tabbar/home-fill.png',
+        iconPath: 'assets/tabbar/home.png',
+        text: '首页'
+      },
+      {
+        pagePath: 'pages/match/index',
         selectedIconPath: 'assets/tabbar/home-fill.png',
         iconPath: 'assets/tabbar/home.png',
         text: '首页'

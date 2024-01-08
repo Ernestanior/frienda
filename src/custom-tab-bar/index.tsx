@@ -1,48 +1,52 @@
 import './index.less'
-import {View} from "@tarojs/components";
+import { View } from "@tarojs/components";
 import match from "@/assets/index/match2.png";
 import mine from "@/assets/index/mine.png";
 import mineFill from "@/assets/index/mine-fill.png";
 import planet from "@/assets/index/planet.png";
 import planetFill from "@/assets/index/planet-fill.png";
 
-import {useCallback} from "react";
+import { useCallback } from "react";
 import Taro from "@tarojs/taro";
 import useStore from "../store/store";
 
-const Index=({style}:any)=> {
-    const {tab,setTab}=useStore()
-    const onSwitchTab=useCallback((url:string)=>{
+const Index = ({ style }: any) => {
+    const { tab, setTab } = useStore()
+    const onSwitchTab = useCallback((url: string) => {
         setTab(url)
-        if (url==='home'){
+        if (url === 'home') {
             // Taro.redirectTo({url:'/pages/index/index'})
-            Taro.switchTab({url:'/pages/index/index'})
+            Taro.switchTab({ url: '/pages/index/index' })
 
         }
-        else if (url==='mine'){
+        else if (url === 'mine') {
             // Taro.redirectTo({url:'/pages/user/index'})
-            Taro.switchTab({url:'/pages/user/index'})
+            Taro.switchTab({ url: '/pages/user/index' })
+        }
+        else if (url === 'match') {
+            // Taro.redirectTo({url:'/pages/user/index'})
+            Taro.switchTab({ url: '/pages/match/index' })
         }
 
-    },[])
+    }, [])
     return (
         <View className={'home-tab'} style={style}>
-            <View className={'tab-item'} onTap={()=>onSwitchTab('home')}>
-                {tab==='home'?<img alt="" src={planetFill} className={'planet-img'}/>:
+            <View className={'tab-item'} onTap={() => onSwitchTab('home')}>
+                {tab === 'home' ? <img alt="" src={planetFill} className={'planet-img'} /> :
                     <img alt="" src={planet} className={'planet-img'} />
-                }<View className={'tab-text'} style={tab==="home"?{color:"#000"}:{}}>首页</View>
+                }<View className={'tab-text'} style={tab === "home" ? { color: "#000" } : {}}>首页</View>
             </View>
-            <View className={'tab-center-item'}>
+            <View className={'tab-center-item'} onTap={() => onSwitchTab('match')} >
                 <View className='match-icon'>
-                    <img alt="" src={match} className={'match-img'}/>
+                    <img alt="" src={match} className={'match-img'} />
                 </View>
-                <View className={'tab-text'} style={tab==="match"?{color:"#000"}:{}}>配对</View>
+                <View className={'tab-text'} style={tab === "match" ? { color: "#000" } : {}}>配对</View>
             </View>
-            <View className={'tab-item'} onTap={()=>onSwitchTab('mine')} >
-                {tab==='mine'?<img alt="" src={mineFill} className={'mine-fill-img'}/>:
+            <View className={'tab-item'} onTap={() => onSwitchTab('mine')} >
+                {tab === 'mine' ? <img alt="" src={mineFill} className={'mine-fill-img'} /> :
                     <img alt="" src={mine} className={'mine-img'} />
                 }
-                <View className={'tab-text'} style={tab==="mine"?{color:"#000"}:{}}>我的</View>
+                <View className={'tab-text'} style={tab === "mine" ? { color: "#000" } : {}}>我的</View>
             </View>
         </View>
     )
