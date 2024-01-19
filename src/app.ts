@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useDidShow, useDidHide } from '@tarojs/taro'
+import Taro, { useDidShow, useDidHide } from '@tarojs/taro'
 // 全局样式
 import './app.less'
 import {userBasic} from "./store/network";
@@ -9,6 +9,11 @@ import '@/assets/font/iconfont.css';
 function App(props) {
   const {setUserInfo,userInfo}=useStore()
   const token = getTokenSync()
+
+  useEffect(()=>{
+    Taro.cloud.init({traceUser:true})
+  },[])
+
   // 可以使用所有的 React Hooks
   useEffect(()=>{
     if (token && !userInfo){

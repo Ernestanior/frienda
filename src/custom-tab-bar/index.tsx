@@ -15,13 +15,13 @@ const Index=({style}:any)=> {
     const onSwitchTab=useCallback((url:string)=>{
         setTab(url)
         if (url==='home'){
-            // Taro.redirectTo({url:'/pages/index/index'})
             Taro.switchTab({url:'/pages/index/index'})
-
         }
         else if (url==='mine'){
-            // Taro.redirectTo({url:'/pages/user/index'})
             Taro.switchTab({url:'/pages/user/index'})
+        }
+        else if (url==='match'){
+            Taro.switchTab({url:'/pages/match/index'})
         }
 
     },[])
@@ -32,7 +32,7 @@ const Index=({style}:any)=> {
                     <img alt="" src={planet} className={'planet-img'} />
                 }<View className={'tab-text'} style={tab==="home"?{color:"#000"}:{}}>首页</View>
             </View>
-            <View className={'tab-center-item'}>
+            <View className={'tab-center-item'} onTap={()=>onSwitchTab('match')}>
                 <View className='match-icon'>
                     <img alt="" src={match} className={'match-img'}/>
                 </View>

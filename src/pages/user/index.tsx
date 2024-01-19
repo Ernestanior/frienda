@@ -24,7 +24,32 @@ const User= ()=> {
     const {setUserInfo,userInfo}=useStore()
     const [codeOpenId,setCodeOpenId]=useState<string>('')
     const [userData,setUserData]=useState<any>({})
-
+    const getLogin = async() => {
+        Taro.cloud
+            .callFunction({
+                name: "login",
+                data: {}
+            })
+            .then(res => {
+                console.log('login',res)
+            })
+        Taro.getUserProfile({
+            desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+            success: (res) => {
+                console.log('user',res)
+            }
+        })
+        // const db = Taro.cloud.database()
+        // const res = await db.collection('test').get()
+        // console.log('reaa',res)
+        // db.collection('test').add({
+        //     data:{
+        //         name:'ppp',age:999
+        //     },
+        //     success:res=>console.log(res),
+        //     fail:err=>console.log(err)
+        // })
+    }
 
     const onReturn=()=>{
         Taro.navigateBack()
@@ -37,13 +62,15 @@ const User= ()=> {
         Taro.hideHomeButton()
     },[])
 
-    const bindPhoneNumber= async (e:any)=>{
-        const res = await wxLogin({codeOpenId,codePhone:e.detail.code,...userData})
-        saveToken(res,async ()=>{
-            const userInfo = await userBasic()
-            setUserInfo(userInfo)
-        })
-    }
+    // const bindPhoneNumber= async (e:any)=>{
+    //     const res = await wxLogin({codeOpenId,codePhone:e.detail.code,...userData})
+    //     saveToken(res,async ()=>{
+    //         const userInfo = await userBasic()
+    //         setUserInfo(userInfo)
+    //         console.log('user',userInfo)
+    //
+    //     })
+    // }
     const login = () =>{
         Taro.login({
             success: function (res) {
@@ -67,18 +94,20 @@ const User= ()=> {
         <View className="profile-page-container" >
             <View className={'header'} style={{marginTop:statusBarHeight}}>
                 <IconFont name={'back'} fontClassName="iconfont" classPrefix='icon' size={16} onClick={onReturn}/>
-                订单详情
+                我的
                 <View style={{width:15}}/>
             </View>
             {userInfo?<div className="profile-login-button" >
                 <img alt="" src={empty} className="profile-login-button-img"/>
                 <span style={{marginLeft:10}}>{userInfo.name}</span>
-            </div>:<div className="profile-login-button" onClick={login} >
+            </div>:<div className="profile-login-button" onClick={getLogin} >
                 <img alt="" src={empty} className="profile-login-button-img"/>
-                <Button style={{border:0,padding:8,fontFamily:"Gill Sans",backgroundColor:"transparent"}} openType={'getPhoneNumber'} onGetPhoneNumber={bindPhoneNumber}>点击登录</Button>
+                <Button style={{border:0,padding:8,fontFamily:"Gill Sans",backgroundColor:"transparent"}}
+                        // openType={'getPhoneNumber'} onGetPhoneNumber={bindPhoneNumber}
+                >点击登录</Button>
             </div>}
             <View className={'detail'}>
-                <View className={'item'}>
+                <View className={'item'} onClick={getLogin}>
                     <span className={'count'}>1.6k</span>
                     <span className={'label'}>关注</span>
                 </View>

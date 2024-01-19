@@ -56,11 +56,12 @@
     "@tarojs/taro": "3.6.16",
     "axios": "^1.5.1",
     "axios-taro-adapter": "^0.0.3",
+    "immer": "^10.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-refresh": "^0.11.0",
-    "zustand": "^4.4.3",
-    "immer": "^10.0.2"
+    "wx-server-sdk": "^2.6.3",
+    "zustand": "^4.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",

@@ -1,7 +1,8 @@
 export default defineAppConfig({
   pages: [
-    'pages/match/index',
+    'pages/createActivity/index',
     'pages/index/index',
+    'pages/match/index',
     'pages/user/index',
     'pages/orderDetail/index',
     'pages/pay/index',
@@ -24,12 +25,12 @@ export default defineAppConfig({
         iconPath: 'assets/tabbar/home.png',
         text: '首页'
       },
-      // {
-      //   pagePath: 'pages/merchant/index',
-      //   selectedIconPath: 'assets/tabbar/menu-fill.png',
-      //   iconPath: 'assets/tabbar/menu.png',
-      //   text: '组局'
-      // },
+      {
+        pagePath: 'pages/match/index',
+        selectedIconPath: 'assets/tabbar/menu-fill.png',
+        iconPath: 'assets/tabbar/menu.png',
+        text: '配对'
+      },
       // {
       //   pagePath: 'pages/activity/index',
       //   selectedIconPath: 'assets/tabbar/shop-fill.png',
