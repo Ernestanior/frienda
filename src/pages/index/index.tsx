@@ -1,7 +1,7 @@
 import './index.less'
 import {View} from "@tarojs/components";
 import TopSection from './components/top'
-import CircleSection from './components/circle'
+// import CircleSection from './components/circle'
 import ActivitySection from './components/activity'
 import RoomList from './components/RoomList'
 // import HomeTab from '../../common/tab'
@@ -13,12 +13,12 @@ import Taro from "@tarojs/taro";
 const Index =()=> {
     const [nav,setNav]=useState<number>(0)
     const onPublish=useCallback(()=>{
-        Taro.navigateTo({url:'/pages/index/createActivity'})
+        Taro.navigateTo({url:'/pages/createActivity/index'})
     },[])
     return (
         <View className={'index-container'}>
             <TopSection nav={nav} onChangeNav={(nav)=>setNav(nav)}/>
-            <CircleSection/>
+            {/*<CircleSection/>*/}
             {nav?<MerchantList/>:<>
                 <ActivitySection/>
                 <RoomList/>

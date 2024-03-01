@@ -9,7 +9,8 @@ const initState: StoreState = {
     token:'',
     userInfo:'',
     tab:'home',
-
+    activityParams:{},
+    loading:true,
 };
 
 const useStore = create<StoreState & StoreActions>()(
@@ -18,8 +19,10 @@ const useStore = create<StoreState & StoreActions>()(
         ...initState,
           setModalVisiable:(modalVisiable:boolean)=>set(()=>({modalVisiable})),
           setModalContent:(modalContent:any)=>set(()=>({modalContent})),
+          setActivityParams:(activityParams:any)=>set(()=>({activityParams})),
           setToken:(token:any)=>set(()=>({token})),
           setUserInfo:(userInfo:any)=>set(()=>({userInfo})),
+          setLoading:(loading:any)=>set(()=>({loading})),
           setTab:(tab:any)=>set(()=>({tab})),
       })),
       {

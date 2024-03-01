@@ -14,7 +14,8 @@ export interface StoreState {
   token:string;
   userInfo:any;
   tab:string;
-
+  activityParams:any;
+  loading:boolean;
 }
 
 export interface StoreActions {
@@ -23,6 +24,8 @@ export interface StoreActions {
   setToken:any;
   setUserInfo:any;
   setTab:any;
+  setActivityParams:any;
+  setLoading:any;
 }
 
 export interface IAccountInfo {

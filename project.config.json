@@ -6,11 +6,11 @@
     "appid": "wx829ef734b745eec5",
     "setting": {
         "urlCheck": true,
-        "es6": false,
-        "enhance": false,
+        "es6": true,
+        "enhance": true,
         "compileHotReLoad": false,
         "postcss": true,
-        "minified": false,
+        "minified": true,
         "babelSetting": {
             "ignore": [],
             "disablePlugins": [],
@@ -28,5 +28,6 @@
     "editorSetting": {
         "tabIndent": "insertSpaces",
         "tabSize": 4
-    }
+    },
+    "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
 }
