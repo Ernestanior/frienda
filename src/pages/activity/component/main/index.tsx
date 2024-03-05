@@ -3,20 +3,15 @@ import './index.less'
 // @ts-ignore
 import Title from "@/common/title";
 
-
-const Index=()=> {
-
+interface IProps{
+    desc:string;
+}
+const Index=({desc}:IProps)=> {
     return (
         <View className={'merchant-main'} >
             <Title text={'活动详情'}/>
             <span className={'merchant-main-content'}>
-                我们专注提高各种高质量走心作品主打硬核机制，专业dm每个月更新爆款剧本，带来更多全新体验上车请提前咨询！！
-                我们专注提高各种高质量走心作品主打硬核机制，专业dm每个月更新爆款剧本，带来更多全新体验上车请提前咨询！！
-                我们专注提高各种高质量走心作品主打硬核机制，专业dm每个月更新爆款剧本，带来更多全新体验上车请提前咨询！！
-                我们专注提高各种高质量走心作品主打硬核机制，专业dm每个月更新爆款剧本，带来更多全新体验上车请提前咨询！！
-                我们专注提高各种高质量走心作品主打硬核机制，专业dm每个月更新爆款剧本，带来更多全新体验上车请提前咨询！！
-                我们专注提高各种高质量走心作品主打硬核机制，专业dm每个月更新爆款剧本，带来更多全新体验上车请提前咨询！！
-                我们专注提高各种高质量走心作品主打硬核机制，专业dm每个月更新爆款剧本，带来更多全新体验上车请提前咨询！！
+                {desc}
             </span>
         </View>
     )

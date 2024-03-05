@@ -1,18 +1,19 @@
-.room-container{
+.activity-list-container{
   margin: 20px;
-  .room-box{
+  .activity-box{
     background-color: #fff;
     box-shadow: 0 0 15px 0 #eee;
     padding: 12px;
     margin-bottom: 10px;
     border-radius: 10px;
-    .room-row {
+    .activity-row {
       display: flex;
       margin-bottom: 5px;
-      .room-image{
+      .activity-image{
         position: relative;
         overflow: hidden;
         margin-right: 10px;
+
         .image{
           width: 110px;
           height: 100px;
@@ -28,25 +29,41 @@
           color: #fff;
         }
       }
-      .room-content{
+      .activity-content{
         font-size: 12px;
+        width: 200px;
         color:#666;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
+        .content-address{
+          height: 20px;
+          box-sizing: border-box;
+          display: flex;
+          align-items: center;
+          .icon{
+            display: flex;
+            align-items: center;
+          }
+          span{
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
         .content-title{
           font-size: 14px;
           font-weight: 500;
           color:#000;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
         .content-date{
           display: flex;
           align-items: center;
         }
-        .content-address{
-          display: flex;
-          align-items: center;
-        }
+
         .content-organizer{
           display: flex;
           align-items: center;

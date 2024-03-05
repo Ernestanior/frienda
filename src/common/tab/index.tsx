@@ -2,8 +2,6 @@ import './index.less'
 import {View} from "@tarojs/components";
 import {IconFont} from "@nutui/icons-react-taro";
 import match from "@/assets/index/match2.png";
-import mine from "@/assets/index/mine.png";
-import mineFill from "@/assets/index/mine-fill.png";
 import {useCallback} from "react";
 import Taro from "@tarojs/taro";
 import useStore from "../../store/store";
@@ -36,9 +34,7 @@ const Index=({style}:any)=> {
                 <View className={'tab-text'} style={tab==="match"?{color:"#000"}:{}}>配对</View>
             </View>
             <View className={'tab-item'} onTap={()=>onSwitchTab('mine')} >
-                {tab==='mine'?<img alt="" src={mineFill} className={'mine-fill-img'}/>:
-                    <img alt="" src={mine} className={'mine-img'} />
-                }
+                <IconFont size={20} fontClassName="iconfont" classPrefix='icon' name='mine' className={'home-img'} style={tab==="mine"&&{color:"#f2ac3c"}}/>
                 <View className={'tab-text'} style={tab==="mine"?{color:"#000"}:{}}>我的</View>
             </View>
         </View>

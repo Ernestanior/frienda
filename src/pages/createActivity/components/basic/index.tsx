@@ -19,13 +19,12 @@ import {
 import {useState} from "react";
 import { ArrowRight } from '@nutui/icons-react-taro';
 import useStore from "../../../../store/store";
-import Loading from "../../../../common/loading";
 
 const statusBarHeight:any=Taro.getSystemInfoSync().statusBarHeight
 
 const Index =({onJump}:any)=> {
     const {setActivityParams}=useStore()
-    const [loading,setLoading]=useState<boolean>(false)
+    // const [loading,setLoading]=useState<boolean>(false)
     const [type,setType]=useState<string>('户外')
     const [img,setImg]=useState<any>()
     const [fileId,setFileId]=useState<string>('')
@@ -55,17 +54,17 @@ const Index =({onJump}:any)=> {
             // Toast.show('text',{title:'请填写全部选项',type:'text',size:'small'})
             return
         }
-        if (!fileId){
+        if (!img.length){
             setErrMsg('需上传图片')
             // Toast.show('text',{title:'需上传图片',type:'text',size:'small'})
             return
         }
         const {title,address,maxNum,type,desc}=res
-        if (title && address && maxNum && endDate && desc){
+        if (title && address && endDate && desc){
             const start = +new Date(startDate)
             const end = +new Date(endDate)
             if(end-start>0){
-                setActivityParams({title,type,address,maxNum,start,end,fileId,desc})
+                setActivityParams({title,type,address,maxNum:maxNum || 1,start,end,fileId,desc,imgUrl:img[0].url})
                 onJump()
             }else{
                 setErrMsg('开始时间必须早于结束时间')
@@ -85,13 +84,13 @@ const Index =({onJump}:any)=> {
             type:'image'
         }
         setImg([imgDetail])
-        setLoading(true)
+        // setLoading(true)
         Taro.cloud.uploadFile({
             cloudPath: 'activity_image/test2.jpg',
             filePath: options.taroFilePath, // 文件路径
             success: res => {
                 // get resource ID
-                setLoading(false)
+                // setLoading(false)
                 setFileId(res.fileID)
             },
             fail: err => {
@@ -102,8 +101,8 @@ const Index =({onJump}:any)=> {
 
     }
     return (
-        <View className='create-activity-basic-container' style={{paddingTop:statusBarHeight}}>
-            <Loading visible={loading} text={'图片核实中'}/>
+        <View className='create-activity-basic-container' style={{paddingTop:statusBarHeight+10}}>
+            {/*<Loading visible={loading} text={'图片核实中'}/>*/}
             <Toast id={'text'}/>
             <View className={'header'} >
                 <IconFont name={'back'} fontClassName="iconfont" classPrefix='icon' size={16} onClick={onReturn}/>
@@ -140,7 +139,7 @@ const Index =({onJump}:any)=> {
                 </View>
                 <View className={'right'}>
                     <Uploader
-                        style={{'--nutui-uploader-preview-tips-background':'transparent'}}
+                        style={{'--nutui-uploader-preview-tips-background':'transparent'} as any}
                         value={img}
                         beforeXhrUpload={onUpload}
                     />

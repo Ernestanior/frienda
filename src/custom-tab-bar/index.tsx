@@ -39,7 +39,7 @@ const Index=({style}:any)=> {
                 <View className={'tab-text'} style={tab==="match"?{color:"#000"}:{}}>配对</View>
             </View>
             <View className={'tab-item'} onTap={()=>onSwitchTab('mine')} >
-                {tab==='mine'?<img alt="" src={mineFill} className={'mine-fill-img'}/>:
+                {tab==='mine'?<img alt="" src={mineFill} className={'mine-img'}/>:
                     <img alt="" src={mine} className={'mine-img'} />
                 }
                 <View className={'tab-text'} style={tab==="mine"?{color:"#000"}:{}}>我的</View>

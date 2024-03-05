@@ -3,7 +3,7 @@ import {View} from "@tarojs/components";
 import TopSection from './components/top'
 // import CircleSection from './components/circle'
 import ActivitySection from './components/activity'
-import RoomList from './components/RoomList'
+import ActivityList from './components/ActivityList'
 // import HomeTab from '../../common/tab'
 import {useCallback, useState} from "react";
 import MerchantList from "./components/merchantList";
@@ -21,7 +21,7 @@ const Index =()=> {
             {/*<CircleSection/>*/}
             {nav?<MerchantList/>:<>
                 <ActivitySection/>
-                <RoomList/>
+                <ActivityList/>
             </>}
             {/*<HomeTab/>*/}
             <View className={'publish-btn'} onClick={onPublish}>

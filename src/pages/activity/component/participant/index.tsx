@@ -1,13 +1,17 @@
 import {View} from '@tarojs/components'
 import './index.less'
 
-const Index=()=> {
+interface IProps{
+    maxNum:string;
+    participant:any[];
+}
+const Index=({maxNum='10',participant=[]}:IProps)=> {
 
     return (
         <View className={'participant-container'} >
             <View className={'participant-header'}>
-                <span className={'title'}>当前参与 15/19</span>
-                <span className={'desc'}>仅剩4个名额</span>
+                <span className={'title'}>当前参与 {participant.length}/{maxNum}</span>
+                <span className={'desc'}>剩{parseInt(maxNum)-participant.length}个名额</span>
             </View>
             {/*<View className={'participant-content'}>*/}
             {/*    <img alt="" src={profile} className='profile-img'/>*/}

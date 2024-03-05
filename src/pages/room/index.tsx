@@ -2,14 +2,13 @@ import {useMemo, useState} from 'react'
 import Taro, { useDidShow } from '@tarojs/taro'
 import {View, ScrollView} from '@tarojs/components'
 import './index.less'
-import type CustomTabBar from '../../custom-tab-bar'
 const WEEK=['周日','周一','周二','周三','周四','周五','周六']
 
 export default function Index () {
     const page = useMemo(() => Taro.getCurrentInstance().page, [])
     const [selectedDate,setSelectedDate]=useState<number>(0)
     useDidShow(() => {
-        const tabbar = Taro.getTabBar<CustomTabBar>(page)
+        const tabbar = Taro.getTabBar<any>(page)
         tabbar?.setSelected(1)
     })
     const dateList = ['','','','','','','','','','','','','','']

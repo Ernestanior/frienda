@@ -1,7 +1,8 @@
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import Taro from '@tarojs/taro'
 import {ScrollView, View} from '@tarojs/components'
 import empty from '@/assets/profile/image.png'
+import qq from '@/assets/profile/qq.jpeg'
 
 import './index.less'
 import {Button} from "@nutui/nutui-react-taro";
@@ -12,12 +13,14 @@ import merchant from "@/assets/profile/nav/merchant.png";
 import star from "@/assets/profile/nav/star.png";
 import comment from "@/assets/profile/nav/comment.png";
 import nav6 from "@/assets/nav/nav6.png";
-import demo4 from "../../assets/index/demo4.png";
 import profile from "../../assets/index/profile.png";
+import moment from "moment";
 const statusBarHeight:any=Taro.getSystemInfoSync().statusBarHeight
 
 const User= ()=> {
     const {setUserInfo,userInfo}=useStore()
+    const [activityList,setActivityList]=useState<any[]>([])
+
     const getLogin = async() => {
         Taro.cloud
             .callFunction({
@@ -40,6 +43,7 @@ const User= ()=> {
                 console.log('user',res)
             }
         })
+
         // const db = Taro.cloud.database()
         // const res = await db.collection('test').get()
         // console.log('reaa',res)
@@ -55,12 +59,24 @@ const User= ()=> {
     const onReturn=()=>{
         Taro.navigateBack()
     }
-    const goto=(page:string)=>{
-        Taro.navigateTo({url:page})
+    const goto=(page:string,item?:any)=>{
+        Taro.navigateTo({
+            url:page,
+            success:()=>{
+                Taro.eventCenter.trigger('activityPage',item)
+            }
+        })
     }
 
     useEffect(()=>{
         Taro.hideHomeButton()
+    },[])
+
+    useEffect(()=>{
+        const db = Taro.cloud.database()
+        db.collection('activity').get().then((res:any)=>{
+            setActivityList(res.data)
+        })
     },[])
 
     // const bindPhoneNumber= async (e:any)=>{
@@ -99,10 +115,10 @@ const User= ()=> {
                 <View style={{width:15}}/>
             </View>
             {userInfo?<div className="profile-login-button" >
-                <img alt="" src={empty} className="profile-login-button-img"/>
+                <img alt="" src={qq} className="profile-login-button-img"/>
                 <span>打卡小新人</span>
             </div>:<div className="profile-login-button" onClick={getLogin} >
-                <img alt="" src={empty} className="profile-login-button-img"/>
+                <img alt="" src={empty} className="profile-login-button-empty-img"/>
                 <Button style={{border:0,padding:8,fontFamily:"Gill Sans",backgroundColor:"transparent"}}
                         // openType={'getPhoneNumber'} onGetPhoneNumber={bindPhoneNumber}
                 >点击登录</Button>
@@ -147,90 +163,41 @@ const User= ()=> {
                 </View>
                 </View>
             </View>
-            <View className='activity-box'>
+            <View className='activity-box-container'>
                 <img alt="" src={nav6} className="activity-title"/>
-                <ScrollView scrollX scrollWithAnimation>
+                {userInfo?<ScrollView scrollX scrollWithAnimation>
                     <View style={{display:"flex"}}>
-                        <View className='activity-item' onClick={()=>goto('/pages/activity/index')}>
-                            <View className='activity-row'>
-                                <View className='activity-image'>
-                                    <img alt="" src={demo4} className={'image'}/>
-                                    <View className={'image-tag'}>报名中</View>
-                                </View>
-                                <View className='activity-content'>
-                                    <View className='content-title'>
-                                        摄影 | 黑龙潭风铃节 打卡小冰岛
+                        {activityList.map((item:any)=>
+                            <View className='activity-item' onClick={()=>goto(`/pages/activity/index?${item._id}`,item)}>
+                                <View className='activity-row'>
+                                    <View className='activity-image'>
+                                        <img alt="" src={item.imgUrl} className={'image'}/>
+                                        <View className={'image-tag'}>报名中</View>
                                     </View>
-                                    <View className='content-date'>
-                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="clock" style={{marginRight:5}}/>
-                                        20:30-22:30 周一 06.12
-                                    </View>
-                                    <View className='content-address'>
-                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="address" style={{marginRight:5}}/>
-                                        11km 景天320足球公园
-                                    </View>
-                                    <View className='content-organizer'>
-                                        <img alt="" src={profile} className='profile-img'/>
-                                        Floyd Miles
-                                    </View>
-                                </View>
-                            </View>
-
-                        </View>
-                        <View className='activity-item' onClick={()=>goto('/pages/activity/index')}>
-                            <View className='activity-row'>
-                                <View className='activity-image'>
-                                    <img alt="" src={demo4} className={'image'}/>
-                                    <View className={'image-tag'}>报名中</View>
-                                </View>
-                                <View className='activity-content'>
-                                    <View className='content-title'>
-                                        摄影 | 黑龙潭风铃节 打卡小冰岛
-                                    </View>
-                                    <View className='content-date'>
-                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="clock" style={{marginRight:5}}/>
-                                        20:30-22:30 周一 06.12
-                                    </View>
-                                    <View className='content-address'>
-                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="address" style={{marginRight:5}}/>
-                                        11km 景天320足球公园
-                                    </View>
-                                    <View className='content-organizer'>
-                                        <img alt="" src={profile} className='profile-img'/>
-                                        Floyd Miles
+                                    <View className='activity-content'>
+                                        <View className='content-title'>
+                                            {item.title}
+                                        </View>
+                                        <View className='content-date'>
+                                            <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="clock" style={{marginRight:5}}/>
+                                            {moment(item.start).format('HH:mm ddd DD/MM/YYYY')}
+                                        </View>
+                                        <View className='content-address'>
+                                            <View className='icon'>
+                                                <IconFont size={13}  fontClassName="iconfont" classPrefix='icon' name="address" style={{marginRight:5}}/>
+                                            </View>
+                                            <span>{item.address}</span>
+                                        </View>
+                                        <View className='content-organizer'>
+                                            <img alt="" src={profile} className='profile-img'/>
+                                            {item.organizer}
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-
-                        </View>
-                        <View className='activity-item' onClick={()=>goto('/pages/activity/index')}>
-                            <View className='activity-row'>
-                                <View className='activity-image'>
-                                    <img alt="" src={demo4} className={'image'}/>
-                                    <View className={'image-tag'}>报名中</View>
-                                </View>
-                                <View className='activity-content'>
-                                    <View className='content-title'>
-                                        摄影 | 黑龙潭风铃节 打卡小冰岛
-                                    </View>
-                                    <View className='content-date'>
-                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="clock" style={{marginRight:5}}/>
-                                        20:30-22:30 周一 06.12
-                                    </View>
-                                    <View className='content-address'>
-                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="address" style={{marginRight:5}}/>
-                                        11km 景天320足球公园
-                                    </View>
-                                    <View className='content-organizer'>
-                                        <img alt="" src={profile} className='profile-img'/>
-                                        Floyd Miles
-                                    </View>
-                                </View>
-                            </View>
-
-                        </View>
+                            </View>)}
                     </View>
-                </ScrollView>
+                </ScrollView>:
+                    <View style={{height:50,color:"#aaa",display:"flex",justifyContent:"center",alignItems:"center",fontSize:14}}>请先完成登录哦~</View>}
             </View>
 
             {/*<HomeTab style={{margin:'0 10px'}}/>*/}

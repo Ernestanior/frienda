@@ -20,11 +20,20 @@
     padding-bottom:10px;
     font-size: 16px;
     .profile-login-button-img{
-      width:40px;
-      height:40px;
+      width:50px;
+      height:50px;
+      box-sizing: border-box;
       border-radius:30px;
       background-color:#f3f3f3;
-      padding:10px;
+      margin-right: 10px;
+    }
+    .profile-login-button-empty-img{
+      width:50px;
+      height:50px;
+      box-sizing: border-box;
+      border-radius:30px;
+      padding: 10px;
+      background-color:#f3f3f3;
       margin-right: 10px;
     }
   }
@@ -104,15 +113,15 @@
       }
     }
   }
-  .activity-box{
+  .activity-box-container{
     background-color: #fff;
     margin-top: 10px;
     padding: 10px 15px;
     border-radius: 10px;
-      .activity-title{
-        width: 88px;
-        height: 36px;
-      }
+    .activity-title{
+      width: 88px;
+      height: 36px;
+    }
     .activity-item{
       padding: 4px 9px;
       margin-right: 10px;
@@ -120,12 +129,11 @@
       .activity-row {
         display: flex;
         margin-bottom: 5px;
-        width: 270px;
-
         .activity-image{
           position: relative;
           overflow: hidden;
           margin-right: 10px;
+
           .image{
             width: 110px;
             height: 100px;
@@ -143,23 +151,39 @@
         }
         .activity-content{
           font-size: 12px;
+          width: 200px;
           color:#666;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+          .content-address{
+            height: 20px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            .icon{
+              display: flex;
+              align-items: center;
+            }
+            span{
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
           .content-title{
             font-size: 14px;
             font-weight: 500;
             color:#000;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
           }
           .content-date{
             display: flex;
             align-items: center;
           }
-          .content-address{
-            display: flex;
-            align-items: center;
-          }
+
           .content-organizer{
             display: flex;
             align-items: center;
@@ -172,8 +196,8 @@
         }
       }
     }
-
   }
+
 
 
 }

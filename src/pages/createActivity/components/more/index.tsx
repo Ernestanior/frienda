@@ -21,16 +21,16 @@ const Index =({onJump}:any)=> {
     }
     const onSubmit=useCallback(()=>{
         const db = Taro.cloud.database()
-        db.collection('room').add({
-            data:activityParams,
+        db.collection('activity').add({
+            data:{...activityParams,organizer:'木小源',participant:[]},
             success:()=>{
-                Taro.navigateBack()
+                Taro.reLaunch({url:'/pages/index/index'})
             },
             fail:err=>console.log(err)
         })
     },[])
     return (
-        <View className='create-activity-more-container' style={{paddingTop:statusBarHeight}}>
+        <View className='create-activity-more-container' style={{paddingTop:statusBarHeight+10}}>
             <View className={'header'} >
                 <IconFont name={'back'} fontClassName="iconfont" classPrefix='icon' size={16} onClick={onReturn}/>
                 创建活动
@@ -91,7 +91,7 @@ const Index =({onJump}:any)=> {
                 <View className={'row'}>
                     <span className={'form-label'}>活动候补</span>
                     <Switch
-                        style={{'--nutui-switch-open-background-color':'#f5c360'}}
+                        style={{'--nutui-switch-open-background-color':'#f5c360'} as any}
                         checked={candidate}
                         onChange={(value) => setCandidate(value)}/>
                 </View>
@@ -105,7 +105,7 @@ const Index =({onJump}:any)=> {
                 <View className={'form-row'}>
                     <View className={'form-label'}>活动群二维码</View>
                     <Switch
-                        style={{'--nutui-switch-open-background-color':'#f5c360'}}
+                        style={{'--nutui-switch-open-background-color':'#f5c360'} as any}
                         checked={qrCode}
                         onChange={(value) => setQrCode(value)}/>
                 </View>
