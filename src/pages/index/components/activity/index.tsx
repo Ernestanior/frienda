@@ -10,7 +10,7 @@ const Index=()=> {
     //     Taro.navigateTo({url:page})
     // }
     const toActivity=()=>{
-        Taro.navigateTo({url:'/pages/activity/index'})
+        Taro.navigateTo({url:'/pages/user/index'})
     }
     return (
         <View className={'activity-section'} onClick={toActivity}>

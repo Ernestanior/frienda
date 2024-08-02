@@ -16,13 +16,15 @@ const Index =({onJump}:any)=> {
     const [memberType,setMemberType]=useState<string>('所有人')
     const [candidate,setCandidate]=useState<boolean>()
     const [qrCode,setQrCode]=useState<boolean>()
+
+    console.log('activityParams',activityParams)
     const onReturn=()=>{
         Taro.navigateBack()
     }
     const onSubmit=useCallback(()=>{
         const db = Taro.cloud.database()
         db.collection('activity').add({
-            data:{...activityParams,organizer:'木小源',participant:[]},
+            data:{...activityParams,organizer:'木小源',participant:[],createTime:+new Date()},
             success:()=>{
                 Taro.reLaunch({url:'/pages/index/index'})
             },

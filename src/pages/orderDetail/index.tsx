@@ -15,14 +15,14 @@ const Index =()=>{
         Taro.navigateBack()
     }
     const onInvite=useCallback(()=>{
-        Taro.navigateTo({url:'/pages/index/index'})
+        Taro.navigateBack({delta:2})
 
     },[])
         return (
             <View className={'pay-container'}>
                 <View className={'header'} style={{marginTop:statusBarHeight}}>
                     <IconFont name={'back'} fontClassName="iconfont" classPrefix='icon' size={16} onClick={onReturn}/>
-                    订单详情
+                    详情
                     <View style={{width:15}}/>
                 </View>
                 <View className='pay-box' style={{marginTop:statusBarHeight,display:"flex"}}>

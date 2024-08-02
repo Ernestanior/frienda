@@ -13,13 +13,6 @@ const Index=({maxNum='10',participant=[]}:IProps)=> {
                 <span className={'title'}>当前参与 {participant.length}/{maxNum}</span>
                 <span className={'desc'}>剩{parseInt(maxNum)-participant.length}个名额</span>
             </View>
-            {/*<View className={'participant-content'}>*/}
-            {/*    <img alt="" src={profile} className='profile-img'/>*/}
-            {/*    <img alt="" src={profile} className='profile-img'/>*/}
-            {/*    <img alt="" src={profile} className='profile-img'/>*/}
-            {/*    <img alt="" src={profile} className='profile-img'/>*/}
-            {/*    <img alt="" src={profile} className='profile-img'/>*/}
-            {/*</View>*/}
         </View>
     )
 }

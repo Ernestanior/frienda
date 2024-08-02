@@ -2,7 +2,6 @@ import {useCallback, useMemo, useState} from 'react'
 import Taro, { useDidShow } from '@tarojs/taro'
 import {View} from '@tarojs/components'
 import './index.less'
-import type CustomTabBar from '../../custom-tab-bar'
 import Header from "./component/header";
 import Nav from "./component/nav";
 import Main from "./component/main";
@@ -20,7 +19,7 @@ export default function Index () {
         Taro.pageScrollTo({selector})
     },[nav])
     useDidShow(() => {
-        const tabbar = Taro.getTabBar<CustomTabBar>(page)
+        const tabbar = Taro.getTabBar<any>(page)
         tabbar?.setSelected(1)
     })
 

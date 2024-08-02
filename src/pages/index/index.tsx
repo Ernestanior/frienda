@@ -8,12 +8,21 @@ import ActivityList from './components/ActivityList'
 import {useCallback, useState} from "react";
 import MerchantList from "./components/merchantList";
 import Taro from "@tarojs/taro";
+import useUserInfo from "../../hooks/useUserInfo";
+import useStore from "../../store/store";
 
 
 const Index =()=> {
     const [nav,setNav]=useState<number>(0)
+    const {setTab}=useStore()
+    const {userInfo}=useUserInfo()
     const onPublish=useCallback(()=>{
-        Taro.navigateTo({url:'/pages/createActivity/index'})
+        if (userInfo){
+            Taro.navigateTo({url:'/pages/createActivity/index'})
+        }else{
+            Taro.switchTab({url:'/pages/profile/index'})
+            setTab('mine')
+        }
     },[])
     return (
         <View className={'index-container'}>

@@ -1,208 +1,290 @@
-import {useEffect, useState} from 'react'
-import Taro from '@tarojs/taro'
-import {ScrollView, View} from '@tarojs/components'
-import empty from '@/assets/profile/image.png'
-import qq from '@/assets/profile/qq.jpeg'
-
+import {View} from '@tarojs/components'
 import './index.less'
-import {Button} from "@nutui/nutui-react-taro";
-import useStore from "../../store/store";
 import {IconFont} from "@nutui/icons-react-taro";
-import order from "@/assets/profile/nav/order.png";
-import merchant from "@/assets/profile/nav/merchant.png";
-import star from "@/assets/profile/nav/star.png";
-import comment from "@/assets/profile/nav/comment.png";
-import nav6 from "@/assets/nav/nav6.png";
+import Taro from "@tarojs/taro";
+import qq from '@/assets/profile/qq.jpeg'
+import nav3 from "../../assets/nav/nav3.png";
+import nav4 from "../../assets/nav/nav4.png";
+import nav5 from "../../assets/nav/nav5.png";
+import {useCallback, useState} from "react";
+import Title from "../../common/title";
+import demo4 from "../../assets/index/demo4.png";
 import profile from "../../assets/index/profile.png";
-import moment from "moment";
+
 const statusBarHeight:any=Taro.getSystemInfoSync().statusBarHeight
 
-const User= ()=> {
-    const {setUserInfo,userInfo}=useStore()
-    const [activityList,setActivityList]=useState<any[]>([])
+export default function Index () {
+    const [nav,setNav]=useState<number>(3)
 
-    const getLogin = async() => {
-        Taro.cloud
-            .callFunction({
-                name: "login",
-                data: {}
-            })
-            .then((res:any) => {
-                console.log('login',res)
-                const db = Taro.cloud.database()
-                db.collection('user').add({
-                    data:res.result.event.userInfo,
-                    success:res=>console.log(res),
-                    fail:err=>console.log(err)
-                })
-                setUserInfo(res.result.event.userInfo)
-            })
-        Taro.getUserProfile({
-            desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-            success: (res) => {
-                console.log('user',res)
-            }
-        })
+    const jumpTo=useCallback((nav:number)=>{
+        setNav(nav)
+        const selector=nav===3?'.user-main':nav===4?'.user-activity':'.user-comment'
+        Taro.pageScrollTo({selector})
+    },[nav])
 
-        // const db = Taro.cloud.database()
-        // const res = await db.collection('test').get()
-        // console.log('reaa',res)
-        // db.collection('test').add({
-        //     data:{
-        //         name:'ppp',age:999
-        //     },
-        //     success:res=>console.log(res),
-        //     fail:err=>console.log(err)
-        // })
-    }
 
     const onReturn=()=>{
         Taro.navigateBack()
     }
-    const goto=(page:string,item?:any)=>{
-        Taro.navigateTo({
-            url:page,
-            success:()=>{
-                Taro.eventCenter.trigger('activityPage',item)
-            }
-        })
-    }
-
-    useEffect(()=>{
-        Taro.hideHomeButton()
-    },[])
-
-    useEffect(()=>{
-        const db = Taro.cloud.database()
-        db.collection('activity').get().then((res:any)=>{
-            setActivityList(res.data)
-        })
-    },[])
-
-    // const bindPhoneNumber= async (e:any)=>{
-    //     const res = await wxLogin({codeOpenId,codePhone:e.detail.code,...userData})
-    //     saveToken(res,async ()=>{
-    //         const userInfo = await userBasic()
-    //         setUserInfo(userInfo)
-    //         console.log('user',userInfo)
-    //
-    //     })
-    // }
-    // const login = () =>{
-    //     Taro.login({
-    //         success: function (res) {
-    //             if (res.code) {
-    //                 setCodeOpenId(res.code)
-    //             } else {
-    //                 console.log('登录失败！' + res.errMsg)
-    //             }
-    //         }
-    //     })
-    //     Taro.getUserProfile({
-    //         desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-    //         success: (res) => {
-    //             // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-    //             setUserData({encryptedData:res.encryptedData,iv:res.iv})
-    //         }
-    //     })
-    // }
 
     return (
-        <View className="profile-page-container" >
-            <View className={'header'} style={{marginTop:statusBarHeight}}>
-                <IconFont name={'back'} fontClassName="iconfont" classPrefix='icon' size={16} onClick={onReturn}/>
-                我的
-                <View style={{width:15}}/>
-            </View>
-            {userInfo?<div className="profile-login-button" >
-                <img alt="" src={qq} className="profile-login-button-img"/>
-                <span>打卡小新人</span>
-            </div>:<div className="profile-login-button" onClick={getLogin} >
-                <img alt="" src={empty} className="profile-login-button-empty-img"/>
-                <Button style={{border:0,padding:8,fontFamily:"Gill Sans",backgroundColor:"transparent"}}
-                        // openType={'getPhoneNumber'} onGetPhoneNumber={bindPhoneNumber}
-                >点击登录</Button>
-            </div>}
-            <View className={'detail'}>
-                <View className={'item'} onClick={getLogin}>
-                    <span className={'count'}>1.6k</span>
-                    <span className={'label'}>关注</span>
-                </View>
-                <View className={'item'}>
-                    <span className={'count'}>128</span>
-                    <span className={'label'}>粉丝</span>
-                </View>
-                <View className={'item'}>
-                    <span className={'count'}>42</span>
-                    <span className={'label'}>历史活动</span>
-                </View>
-            </View>
-            <View className='nav-box'>
-                <View className='wallet'>
-                    <span style={{fontSize:14,fontWeight:500}}>我的钱包</span>
-                    <span style={{display:"flex",alignItems:"center",fontSize:10}}>
-                        立即进入
-                        <IconFont name={'right1'} fontClassName="iconfont" classPrefix='icon' size={10} onClick={onReturn}/>
-                    </span>
-                </View>
-                <View className='nav'>
-                    <View className={'item'}>
-                        <img alt="" src={order} className='icon-order'/>
-                        <span className={'label'}>订单</span>
+        <>
+            <View className='user-container'>
+                <View className={'top-container'}>
+                    <View className={'header'} style={{marginTop:statusBarHeight}}>
+                        <IconFont name={'back'} fontClassName="iconfont" classPrefix='icon' size={16} onClick={onReturn}/>
                     </View>
-                    <View className={'item'}>
-                        <img alt="" src={comment} className='icon'/>
-                        <span className={'label'}>评价</span>
+                    <View className={'user-detail'}>
+                        <View className={'profile'} >
+                            <img alt="" src={qq}  className="profile-img"/>
+                            <View >JD SKI</View>
+                        </View>
+                        <View className={'column'}>
+                            <View className={'number'}>32</View>
+                            <View className={'text'}>组织活动</View>
+                        </View>
+                        <View className={'column'}>
+                            <View className={'number'}>320</View>
+                            <View className={'text'}>收藏量</View>
+                        </View>
+                        <View className={'icon'}>
+                            <IconFont name={'share'} fontClassName="iconfont" classPrefix='icon' size={26} />
+                            <IconFont name={'favor'} fontClassName="iconfont" classPrefix='icon' size={26} />
+                        </View>
                     </View>
-                    <View className={'item'}>
-                        <img alt="" src={star} className='icon'/>
-                        <span className={'label'}>达人入驻</span>
-                    </View><View className={'item'}>
-                    <img alt="" src={merchant} className='icon'/>
-                    <span className={'label'}>商家入驻</span>
+                    <View className={'tag-list'}>
+                        <div className={'tag'}>户外</div>
+                        <div className={'tag'}>运动</div>
+                        <div className={'tag'}>徒步</div>
+                    </View>
+                    <View className={'desc'}>
+                        阳光宅男，擅长骑马涉猎，网球，躲猫猫，飞盘，徒步，野外运动，希望和大家玩得开心
+                    </View>
                 </View>
-                </View>
-            </View>
-            <View className='activity-box-container'>
-                <img alt="" src={nav6} className="activity-title"/>
-                {userInfo?<ScrollView scrollX scrollWithAnimation>
-                    <View style={{display:"flex"}}>
-                        {activityList.map((item:any)=>
-                            <View className='activity-item' onClick={()=>goto(`/pages/activity/index?${item._id}`,item)}>
-                                <View className='activity-row'>
-                                    <View className='activity-image'>
-                                        <img alt="" src={item.imgUrl} className={'image'}/>
-                                        <View className={'image-tag'}>报名中</View>
+                <View className={'content-container'}>
+                    <View className={'nav-bar'} >
+                        <View className={'nav-item'}>
+                            {nav===3?<img alt="" src={nav3} className={'navigation-image-three'}/>:<View onTap={()=>jumpTo(3)}>主页</View>}
+                        </View>
+                        <View className={'nav-item'}>
+                            {nav===4?<img alt="" src={nav4} className={'navigation-image-four'}/>:<View onTap={()=>jumpTo(4)}>活动</View>}
+                        </View>
+                        <View className={'nav-item'}>
+                            {nav===5?<img alt="" src={nav5} className={'navigation-image-five'}/>:<View onTap={()=>jumpTo(5)}>评价</View>}
+                        </View>
+                    </View>
+                    <View className={'user-main'} >
+                        <span className={'merchant-main-content'}>
+                            我们专注提高各种高质量走心作品主打硬核机制，专业dm每个月更新爆款剧本，带来更多全新体验上车请提前咨询！！
+                        </span>
+                    </View>
+                    <View className={'user-activity'} >
+                        <Title text={'活动'}/>
+                        <View className='room-box' >
+                            <View className='room-row'>
+                                <View className='room-image'>
+                                    <img alt="" src={demo4} className={'image'}/>
+                                    <View className={'image-tag'}>报名中</View>
+                                </View>
+                                <View className='room-content'>
+                                    <View className='content-title'>
+                                        摄影 | 黑龙潭风铃节 打卡小冰岛
                                     </View>
-                                    <View className='activity-content'>
-                                        <View className='content-title'>
-                                            {item.title}
-                                        </View>
-                                        <View className='content-date'>
-                                            <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="clock" style={{marginRight:5}}/>
-                                            {moment(item.start).format('HH:mm ddd DD/MM/YYYY')}
-                                        </View>
-                                        <View className='content-address'>
-                                            <View className='icon'>
-                                                <IconFont size={13}  fontClassName="iconfont" classPrefix='icon' name="address" style={{marginRight:5}}/>
-                                            </View>
-                                            <span>{item.address}</span>
-                                        </View>
-                                        <View className='content-organizer'>
+                                    <View className='content-date'>
+                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="clock" style={{marginRight:5}}/>
+                                        20:30-22:30 周一 06.12
+                                    </View>
+                                    <View className='content-address'>
+                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="address" style={{marginRight:5}}/>
+                                        11km 景天320足球公园
+                                    </View>
+                                    <View className='people'>
+                                        <View className='people-list'>
                                             <img alt="" src={profile} className='profile-img'/>
-                                            {item.organizer}
+                                            <img alt="" src={profile} className='profile-img'/>
+                                            <img alt="" src={profile} className='profile-img'/>
+                                            <img alt="" src={profile} className='profile-img'/>
                                         </View>
+                                        20人已加入
                                     </View>
                                 </View>
-                            </View>)}
+                            </View>
+
+
+                        </View>
+                        <View className='room-box' >
+                            <View className='room-row'>
+                                <View className='room-image'>
+                                    <img alt="" src={demo4} className={'image'}/>
+                                    <View className={'image-tag'}>报名中</View>
+                                </View>
+                                <View className='room-content'>
+                                    <View className='content-title'>
+                                        摄影 | 黑龙潭风铃节 打卡小冰岛
+                                    </View>
+                                    <View className='content-date'>
+                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="clock" style={{marginRight:5}}/>
+                                        20:30-22:30 周一 06.12
+                                    </View>
+                                    <View className='content-address'>
+                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="address" style={{marginRight:5}}/>
+                                        11km 景天320足球公园
+                                    </View>
+                                    <View className='people'>
+                                        <View className='people-list'>
+                                            <img alt="" src={profile} className='profile-img'/>
+                                            <img alt="" src={profile} className='profile-img'/>
+                                            <img alt="" src={profile} className='profile-img'/>
+                                            <img alt="" src={profile} className='profile-img'/>
+                                        </View>
+                                        20人已加入
+                                    </View>
+                                </View>
+                            </View>
+
+
+                        </View>
+                        <View className='room-box' >
+                            <View className='room-row'>
+                                <View className='room-image'>
+                                    <img alt="" src={demo4} className={'image'}/>
+                                    <View className={'image-tag'}>报名中</View>
+                                </View>
+                                <View className='room-content'>
+                                    <View className='content-title'>
+                                        摄影 | 黑龙潭风铃节 打卡小冰岛
+                                    </View>
+                                    <View className='content-date'>
+                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="clock" style={{marginRight:5}}/>
+                                        20:30-22:30 周一 06.12
+                                    </View>
+                                    <View className='content-address'>
+                                        <IconFont size={13} fontClassName="iconfont" classPrefix='icon' name="address" style={{marginRight:5}}/>
+                                        11km 景天320足球公园
+                                    </View>
+                                    <View className='people'>
+                                        <View className='people-list'>
+                                            <img alt="" src={profile} className='profile-img'/>
+                                            <img alt="" src={profile} className='profile-img'/>
+                                            <img alt="" src={profile} className='profile-img'/>
+                                            <img alt="" src={profile} className='profile-img'/>
+                                        </View>
+                                        20人已加入
+                                    </View>
+                                </View>
+                            </View>
+
+
+                        </View>
+
                     </View>
-                </ScrollView>:
-                    <View style={{height:50,color:"#aaa",display:"flex",justifyContent:"center",alignItems:"center",fontSize:14}}>请先完成登录哦~</View>}
+                    <View className={'user-comment'} >
+                        <Title text={'评论'}/>
+                        <View className={'comment-box'}>
+                            <View className={'comment-header'}>
+                                <View style={{display:"flex"}}>
+                                    <img alt="" src={profile} className='profile-img'/>
+                                    <View className={'profile'}>
+                        <span className={'profile-name'}>
+                            Judy
+                        </span>
+                                        <span className={'rate'}>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                        </span>
+                                    </View>
+                                </View>
+                                <span className={'date'}>2023-12-21</span>
+                            </View>
+                            <View className={'comment-content'}>
+                                非常好！我很喜欢！
+                            </View>
+
+                        </View>
+                        <View className={'comment-box'}>
+                            <View className={'comment-header'}>
+                                <View style={{display:"flex"}}>
+                                    <img alt="" src={profile} className='profile-img'/>
+                                    <View className={'profile'}>
+                        <span className={'profile-name'}>
+                            Judy
+                        </span>
+                                        <span className={'rate'}>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                        </span>
+                                    </View>
+                                </View>
+                                <span className={'date'}>2023-12-21</span>
+                            </View>
+                            <View className={'comment-content'}>
+                                非常好！我很喜欢！
+                            </View>
+
+                        </View>
+                        <View className={'comment-box'}>
+                            <View className={'comment-header'}>
+                                <View style={{display:"flex"}}>
+                                    <img alt="" src={profile} className='profile-img'/>
+                                    <View className={'profile'}>
+                        <span className={'profile-name'}>
+                            Judy
+                        </span>
+                                        <span className={'rate'}>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                        </span>
+                                    </View>
+                                </View>
+                                <span className={'date'}>2023-12-21</span>
+                            </View>
+                            <View className={'comment-content'}>
+                                非常好！我很喜欢！
+                            </View>
+
+                        </View>
+                        <View className={'comment-box'}>
+                            <View className={'comment-header'}>
+                                <View style={{display:"flex"}}>
+                                    <img alt="" src={profile} className='profile-img'/>
+                                    <View className={'profile'}>
+                        <span className={'profile-name'}>
+                            Judy
+                        </span>
+                                        <span className={'rate'}>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                            <IconFont name={'star-fill'} size={10} className={'star-icon'}/>
+                        </span>
+                                    </View>
+                                </View>
+                                <span className={'date'}>2023-12-21</span>
+                            </View>
+                            <View className={'comment-content'}>
+                                非常好！我很喜欢！
+                            </View>
+
+                        </View>
+                    </View>
+
+                </View>
+
+
+
             </View>
 
-            {/*<HomeTab style={{margin:'0 10px'}}/>*/}
-        </View>
+        </>
+
     )
 }
-
-export default User

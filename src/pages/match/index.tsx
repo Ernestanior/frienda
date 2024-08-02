@@ -1,21 +1,20 @@
 import { View } from '@tarojs/components'
 import './index.less'
-import { Range, ConfigProvider, Switch } from '@nutui/nutui-react-taro';
+import {Switch, Radio } from '@nutui/nutui-react-taro';
 import Taro from "@tarojs/taro";
-import { useCallback } from "react";
+import {useCallback} from "react";
 import game from '@/assets/match/game.png';
 import beauty from '@/assets/match/beauty.png';
 import gym from '@/assets/match/gym.png';
 import massage from '@/assets/match/massage.png';
 import movie from '@/assets/match/movie.png';
 import outdoor from '@/assets/match/outdoor.png';
-
 const statusBarHeight: any = Taro.getSystemInfoSync().statusBarHeight
 
 const Index = () => {
-
     const onBooking = useCallback(() => {
-        Taro.navigateTo({ url: '/pages/orderDetail/index' })
+        // Taro.navigateTo({ url: '/pages/orderDetail/index' })
+        Taro.navigateTo({ url: '/pages/matchResult/index' })
     }, [])
 
     return (
@@ -24,36 +23,53 @@ const Index = () => {
                 配对
             </View>
             <View className='match-box' >
-                <View className={'match-cell'}>
-                    <View className={'cell-title'}>距离</View>
-                    <ConfigProvider theme={customizeTheme}>
-                        <Range className={'cell-content'} defaultValue={40} onEnd={(val) => console.log(`${val}`)}
-                               maxDescription={'km'}
-                               minDescription={null}
-                               currentDescription={(value) => value}
-                               marks={{
-                                   0: 0,
-                                   100: 100,
-                               }}
-                               button={<View className={'dot-out'}>
-                                   <View className={'dot-in'}/>
-                               </View>} />
-                    </ConfigProvider>
-                </View>
+                {/*<View className={'match-cell'}>*/}
+                {/*    <View className={'cell-title'}>距离</View>*/}
+                {/*    <ConfigProvider theme={customizeTheme}>*/}
+                {/*        <Range className={'cell-content'} defaultValue={40} onEnd={(val:any) => setDistance(val)}*/}
+                {/*               maxDescription={'km'}*/}
+                {/*               minDescription={null}*/}
+                {/*               currentDescription={(value) => value}*/}
+                {/*               marks={{*/}
+                {/*                   0: 0,*/}
+                {/*                   100: 100,*/}
+                {/*               }}*/}
+                {/*               button={<View className={'dot'}>*/}
+                {/*                   <View className={'dot-out'}>*/}
+                {/*                       <View className={'dot-in'}/>*/}
+                {/*                   </View>*/}
+                {/*                   <View className={'text'}>{distance}</View>*/}
+                {/*               </View>} />*/}
+                {/*    </ConfigProvider>*/}
+                {/*</View>*/}
                 <View className={'match-cell'}>
                     <View className={'cell-title'}>人数</View>
-                    <ConfigProvider theme={customizeTheme}>
-                        <Range className={'cell-content'} defaultValue={40} onEnd={(val) => console.log(`${val}`)}
-                               maxDescription={null}
-                               minDescription={null}
-                               marks={{
-                                   0: 0,
-                                   100: 100,
-                               }}
-                               button={<View className={'dot-out'}>
-                                   <View className={'dot-in'}></View>
-                               </View>} />
-                    </ConfigProvider>
+                    {/*<ConfigProvider theme={customizeTheme}>*/}
+                    {/*    <Range className={'cell-content'} defaultValue={40} onEnd={(val:any) =>setPeople(val)}*/}
+                    {/*           maxDescription={null}*/}
+                    {/*           minDescription={null}*/}
+                    {/*           marks={{*/}
+                    {/*               0: 0,*/}
+                    {/*               100: 100,*/}
+                    {/*           }}*/}
+                    {/*           button={<View className={'dot'}>*/}
+                    {/*               <View className={'dot-out'}>*/}
+                    {/*                   <View className={'dot-in'}></View>*/}
+                    {/*               </View>*/}
+                    {/*               <View className={'text'}>{people}</View>*/}
+                    {/*           </View>}/>*/}
+                    {/*</ConfigProvider>*/}
+                    <Radio.Group defaultValue="1" direction="horizontal">
+                        <Radio shape="button" value="1">
+                            5人以内
+                        </Radio>
+                        <Radio shape="button" value="2">
+                            5-10人
+                        </Radio>
+                        <Radio shape="button" value="3">
+                            10人以上
+                        </Radio>
+                    </Radio.Group>
                 </View>
                 <View className={'match-item'}>
                     <View>是否速拼</View>
@@ -94,12 +110,12 @@ const Index = () => {
 }
 export default Index;
 
-const customizeTheme = {
-    nutuiRangeButtonBorder: '1px solid rgba(52,96,250,1)',
-    nutuiRangeActiveColor:
-        'linear-gradient(315deg, rgb(255,186,45) 0%,rgb(255,229,166) 100%)',
-    // nutuiRangeInactiveColor: 'rgb(255,245,225)',
-    nutuiRangeInactiveColor: 'rgb(255,229,166)',
-    nutuiRangeMargin: '20px',
-    nutuiRangeHeight: '5px',
-}
+// const customizeTheme = {
+//     nutuiRangeButtonBorder: '1px solid rgba(52,96,250,1)',
+//     nutuiRangeActiveColor:
+//         'linear-gradient(315deg, rgb(255,186,45) 0%,rgb(255,229,166) 100%)',
+//     // nutuiRangeInactiveColor: 'rgb(255,245,225)',
+//     nutuiRangeInactiveColor: 'rgb(255,229,166)',
+//     nutuiRangeMargin: '20px',
+//     nutuiRangeHeight: '5px',
+// }

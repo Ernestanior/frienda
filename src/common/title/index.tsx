@@ -18,7 +18,7 @@ const styles:any={
     titleContainer:{
         position:'relative',
         width: 'fit-content',
-        fontSize:13,
+        fontSize:15,
         fontWeight:700
     },
     icon:{

@@ -11,6 +11,6 @@ export const saveToken = (token: string,callback) => {
 export const saveTokenSync = (token: string) => {
     return Taro.setStorageSync(key1, token);
 }
-export const removeTokenSync = () => {
-    return Taro.removeStorageSync(key1)
+export const removeToken = (callback) => {
+    return Taro.removeStorage({key:key1,success:callback})
 }

@@ -3,13 +3,14 @@ import profile from '../../../../assets/index/profile.png'
 
 import './index.less'
 import {IconFont} from "@nutui/icons-react-taro";
-import Taro from "@tarojs/taro";
-import {useEffect, useState} from "react";
+import Taro, {useDidShow} from "@tarojs/taro";
+import {useState} from "react";
 import moment from "moment";
+
+export const imgUrl = 'https://6672-frienda-console-6gm7dno861930126-1323669219.tcb.qcloud.la/activity_image/'
 
 const Index=()=> {
     const [activityList,setActivityList]=useState<any[]>([])
-    const [reload,setReload]=useState<boolean>(false)
     const goto=(page:string,item?:any)=>{
         Taro.navigateTo({
             url:page,
@@ -19,13 +20,13 @@ const Index=()=> {
         })
     }
 
-    useEffect(()=>{
-        setReload(false)
+    useDidShow(()=>{
         const db = Taro.cloud.database()
         db.collection('activity').get().then((res:any)=>{
-            setActivityList(res.data)
+            const content = res.data || []
+            setActivityList(content)
         })
-    },[reload])
+    })
 
     return (
             <View className='activity-list-container'>
@@ -33,7 +34,7 @@ const Index=()=> {
                     <View className='activity-box' onClick={()=>goto(`/pages/activity/index?${item._id}`,item)}>
                         <View className='activity-row'>
                             <View className='activity-image'>
-                                <img alt="" src={item.imgUrl} className={'image'}/>
+                                <img alt="" src={imgUrl + item.imgName +'.jpg' } className={'image'}/>
                                 <View className={'image-tag'}>报名中</View>
                             </View>
                             <View className='activity-content'>

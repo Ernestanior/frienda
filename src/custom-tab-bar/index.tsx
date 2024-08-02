@@ -1,6 +1,6 @@
 import './index.less'
 import {View} from "@tarojs/components";
-import match from "@/assets/index/match2.png";
+import match from "@/assets/index/match.png";
 import mine from "@/assets/index/mine.png";
 import mineFill from "@/assets/index/mine-fill.png";
 import planet from "@/assets/index/planet.png";
@@ -18,7 +18,7 @@ const Index=({style}:any)=> {
             Taro.switchTab({url:'/pages/index/index'})
         }
         else if (url==='mine'){
-            Taro.switchTab({url:'/pages/user/index'})
+            Taro.switchTab({url:'/pages/profile/index'})
         }
         else if (url==='match'){
             Taro.switchTab({url:'/pages/match/index'})
@@ -33,9 +33,7 @@ const Index=({style}:any)=> {
                 }<View className={'tab-text'} style={tab==="home"?{color:"#000"}:{}}>首页</View>
             </View>
             <View className={'tab-center-item'} onTap={()=>onSwitchTab('match')}>
-                <View className='match-icon'>
-                    <img alt="" src={match} className={'match-img'}/>
-                </View>
+                <img alt="" src={match} className={'match-img'}/>
                 <View className={'tab-text'} style={tab==="match"?{color:"#000"}:{}}>配对</View>
             </View>
             <View className={'tab-item'} onTap={()=>onSwitchTab('mine')} >

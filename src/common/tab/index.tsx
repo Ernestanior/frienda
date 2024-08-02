@@ -1,7 +1,7 @@
 import './index.less'
 import {View} from "@tarojs/components";
 import {IconFont} from "@nutui/icons-react-taro";
-import match from "@/assets/index/match2.png";
+import match from "@/assets/index/match.png";
 import {useCallback} from "react";
 import Taro from "@tarojs/taro";
 import useStore from "../../store/store";
@@ -17,7 +17,7 @@ const Index=({style}:any)=> {
         }
         else if (url==='mine'){
             // Taro.redirectTo({url:'/pages/user/index'})
-            Taro.switchTab({url:'/pages/user/index'})
+            Taro.switchTab({url:'/pages/profile/index'})
         }
 
     },[])

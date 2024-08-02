@@ -1,12 +1,16 @@
 export default defineAppConfig({
   pages: [
     'pages/index/index',
+    'pages/profile/index',
+    'pages/profile/setting/editDetail/index',
+    'pages/profile/setting/index',
     'pages/user/index',
-    'pages/createActivity/index',
+    'pages/merchant/index',
     'pages/match/index',
+    'pages/createActivity/index',
+    'pages/matchResult/index',
     'pages/orderDetail/index',
     'pages/pay/index',
-    'pages/merchant/index',
     'pages/activity/index',
     'pages/comment/index',
     'pages/note/index',
@@ -38,7 +42,7 @@ export default defineAppConfig({
       //   text: '房间'
       // },
       {
-        pagePath: 'pages/user/index',
+        pagePath: 'pages/profile/index',
         selectedIconPath: 'assets/tabbar/user-fill.png',
         iconPath: 'assets/tabbar/user.png',
         text: '个人中心'

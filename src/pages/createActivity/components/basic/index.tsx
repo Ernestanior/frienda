@@ -19,6 +19,8 @@ import {
 import {useState} from "react";
 import { ArrowRight } from '@nutui/icons-react-taro';
 import useStore from "../../../../store/store";
+import moment from "moment";
+import {randomCode} from "../../../../common/utils";
 
 const statusBarHeight:any=Taro.getSystemInfoSync().statusBarHeight
 
@@ -27,12 +29,28 @@ const Index =({onJump}:any)=> {
     // const [loading,setLoading]=useState<boolean>(false)
     const [type,setType]=useState<string>('户外')
     const [img,setImg]=useState<any>()
+    const [imgName,setImgName]=useState<string>('')
     const [fileId,setFileId]=useState<string>('')
-    const [startDate,setStartDate]=useState<any>('2022/05/10 10:10')
+    const [startDate,setStartDate]=useState<any>(moment(new Date()).format('YYYY/MM/DD HH:mm'))
     const [startVisible,setStartVisible]=useState<boolean>(false)
     const [endDate,setEndDate]=useState<any>('')
     const [endVisible,setEndVisible]=useState<boolean>(false)
     const [errMsg,setErrMsg]=useState<string>('')
+    const [tagList,setTagList]=useState<string[]>([''])
+
+    const addTag=()=>{
+        if (tagList.length>=3){
+            Toast.show('text',{title:'标签最多只能添加3个',type:'text',size:'small'})
+            return
+        }
+        setTagList([...tagList,''])
+    }
+
+    const tagChange=(value,index)=>{
+        const newList = [...tagList]
+        newList[index]=value
+        setTagList(newList)
+    }
     const onStartSelect=(values)=>{
         const datelist= values.map((item:any)=>item.value)
         const date = datelist.slice(0, 3).join('/');
@@ -54,9 +72,13 @@ const Index =({onJump}:any)=> {
             // Toast.show('text',{title:'请填写全部选项',type:'text',size:'small'})
             return
         }
-        if (!img.length){
+        if (!img || !img.length){
             setErrMsg('需上传图片')
             // Toast.show('text',{title:'需上传图片',type:'text',size:'small'})
+            return
+        }
+        if (!tagList.filter(item=>item).length){
+            setErrMsg('至少填写一个标签')
             return
         }
         const {title,address,maxNum,type,desc}=res
@@ -64,7 +86,7 @@ const Index =({onJump}:any)=> {
             const start = +new Date(startDate)
             const end = +new Date(endDate)
             if(end-start>0){
-                setActivityParams({title,type,address,maxNum:maxNum || 1,start,end,fileId,desc,imgUrl:img[0].url})
+                setActivityParams({title,type,address,tag:tagList.filter(item=>item),maxNum:maxNum || 1,start,end,fileId,desc,imgName})
                 onJump()
             }else{
                 setErrMsg('开始时间必须早于结束时间')
@@ -84,14 +106,17 @@ const Index =({onJump}:any)=> {
             type:'image'
         }
         setImg([imgDetail])
+        const code=randomCode()
+        setImgName(code)
         // setLoading(true)
         Taro.cloud.uploadFile({
-            cloudPath: 'activity_image/test2.jpg',
+            cloudPath: 'activity_image/'+code+'.jpg',
             filePath: options.taroFilePath, // 文件路径
             success: res => {
                 // get resource ID
                 // setLoading(false)
                 setFileId(res.fileID)
+                console.log(res)
             },
             fail: err => {
                 // handle error
@@ -151,7 +176,7 @@ const Index =({onJump}:any)=> {
                     <View className={'form-row'}>
                         <View className={'form-label'}>活动名</View>
                         <Form.Item name="title">
-                            <Input placeholder="请输入活动名" type="text"  style={{fontSize:14}}/>
+                            <Input placeholder="请输入活动名" type="text" maxLength={28} style={{fontSize:14}}/>
                         </Form.Item>
                     </View>
                     <View className={'form-row'}>
@@ -190,16 +215,23 @@ const Index =({onJump}:any)=> {
                             <InputNumber placeholder="发起人不计入活动票数"  defaultValue={1} min={0} style={{fontSize:14}}/>
                         </Form.Item>
                     </View>
+                    <View className={'form-tag'}>
+                        <View className={'form-label'}>活动标签</View>
+                        <View className={'tag-list'}>
+                            {tagList.map((item,index)=> <Input className={'input'} placeholder="标签" type="text" value={item} style={{fontSize:14}} onChange={(value)=>tagChange(value,index)}/>)}
+                        </View>
+                        <View className={'add-icon'} onClick={addTag}>+</View>
+                    </View>
 
                     <View className={'form-row'}>
                         <View className={'form-label'}>开始时间</View>
                         <View onClick={()=>setStartVisible(true)}
-                            style={{fontSize:14,flex:1,display:"flex",alignItems:"center",justifyContent:"space-between"}}><View style={{flex:1}}>{startDate}</View><ArrowRight style={{fontSize:12,color:"#666"}}/></View>
+                            style={{fontSize:14,flex:1,paddingRight:20,display:"flex",alignItems:"center",justifyContent:"space-between"}}><View style={{flex:1}}>{startDate}</View><ArrowRight style={{fontSize:14,color:"#666"}}/></View>
                     </View>
                     <View className={'form-row'}>
                         <View className={'form-label'}>结束时间</View>
                         <View onClick={()=>setEndVisible(true)}
-                              style={{fontSize:14,flex:1,display:"flex",alignItems:"center",justifyContent:"space-between"}}><View style={{flex:1}}>{endDate}</View><ArrowRight style={{fontSize:12,color:"#666"}}/></View>
+                              style={{fontSize:14,flex:1,paddingRight:20,display:"flex",alignItems:"center",justifyContent:"space-between"}}><View style={{flex:1}}>{endDate}</View><ArrowRight style={{fontSize:14,color:"#666"}}/></View>
                     </View>
                     <View style={{marginTop:10}}>
                         <View style={{fontSize:14,marginLeft:18}}>活动简介</View>
